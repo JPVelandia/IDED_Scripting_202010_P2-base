@@ -35,18 +35,16 @@ public class PoolBalas : MonoBehaviour
                 pooling.RemoveAt(pooling.Count - 1);
             }
         }
-        else
-        {
+        else{
             gen = Instantiate(balas);
         }
         gen.SetActive(true);
         return gen;
-
     }
-    public void Return(GameObject gO)
+    public void Return(GameObject a)
     {
-        gO.SetActive(false);
-        pooling.Add(gO);
+        a.SetActive(false);
+        pooling.Add(a);
     }
 
 }
