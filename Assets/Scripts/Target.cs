@@ -19,7 +19,7 @@ public class Target : MonoBehaviour
         Destroy(gameObject, TIME_TO_DESTROY);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public void OnCollisionEnter(Collision collision)
     {
         int collidedObjectLayer = collision.gameObject.layer;
 
@@ -48,9 +48,9 @@ public class Target : MonoBehaviour
 
             if (player != null)
             {
-                player.Lives -= 1;
+                player.vidas -= 1;
 
-                if (player.Lives <= 0 && player.OnPlayerDied != null)
+                if (player.vidas <= 0 && player.OnPlayerDied != null)
                 {
                     player.OnPlayerDied();
                 }

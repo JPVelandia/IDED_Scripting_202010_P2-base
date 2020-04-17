@@ -50,7 +50,7 @@ public class UIController : MonoBehaviour
         {
             if (lifeImages[i] != null && lifeImages[i].enabled)
             {
-                lifeImages[i].gameObject.SetActive(playerRef.Lives >= i + 1);
+                lifeImages[i].gameObject.SetActive(playerRef.vidas >= i + 1);
             }
         }
 
@@ -59,7 +59,7 @@ public class UIController : MonoBehaviour
             scoreLabel.text = playerRef.Score.ToString();
         }
 
-        if (playerRef.Lives <= 0)
+        if (playerRef.vidas <= 0)
         {
             CancelInvoke();
 

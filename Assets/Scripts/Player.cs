@@ -39,7 +39,7 @@ public class Player : MonoBehaviour
     #region StatsProperties
 
     public int Score { get; set; }
-    public int Lives { get; set; }
+    public int vidas { get; set; }
 
     #endregion StatsProperties
 
@@ -64,25 +64,25 @@ public class Player : MonoBehaviour
     private bool CanShoot { get => bulletSpawnPoint != null && bullet != null; }
 
     #endregion MovementProperties
-
+    public Action<int> OnPlayerHit;
+    public Action OnPlayerScoreChanged;
     public Action OnPlayerDied;
+
 
     // Start is called before the first frame update
     private void Start()
     {
-        leftCameraBound = Camera.main.ViewportToWorldPoint(new Vector3(
-            0F, 0F, 0F)).x + PLAYER_RADIUS;
+        leftCameraBound = Camera.main.ViewportToWorldPoint(new Vector3 (0F, 0F, 0F)).x + PLAYER_RADIUS;
 
-        rightCameraBound = Camera.main.ViewportToWorldPoint(new Vector3(
-            1F, 0F, 0F)).x - PLAYER_RADIUS;
+        rightCameraBound = Camera.main.ViewportToWorldPoint(new Vector3( 1F, 0F, 0F)).x - PLAYER_RADIUS;
 
-        Lives = PLAYER_LIVES;
+        vidas = PLAYER_LIVES;
     }
-
+     
     // Update is called once per frame
     private void Update()
     {
-        if (Lives <= 0)
+        if (vidas <= 0)
         {
             this.enabled = false;
             gameObject.SetActive(false);
@@ -104,6 +104,30 @@ public class Player : MonoBehaviour
                    (bullet, bulletSpawnPoint.position, bulletSpawnPoint.rotation)
                    .AddForce(transform.up * bulletSpeed, ForceMode.Impulse);
             }
+        }
+    }
+
+    public void ReciveDamage(int daño)
+    {
+        vidas -= daño;
+        if (vidas > 0)
+        {
+            if (OnPlayerHit != null)
+            {
+                OnPlayerHit(daño);
+            }
+        }
+        else
+        {
+            if (OnPlayerDied != null)
+            {
+                OnPlayerDied(daño);
+            }
+        }
+        if (vidas <= 0)
+        {
+            enabled = false;
+            gameObject.SetActive(false);
         }
     }
 }
